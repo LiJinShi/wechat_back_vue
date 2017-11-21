@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="">
     <span class="pageT">FirstPage</span>
+    <a href="http://www.cnblogs.com/buerjj/p/7868739.html">此页面代码讲解</a>
 
     <div class="goTwopage" @click="goTwopageClick()">
       进入第二个页面
