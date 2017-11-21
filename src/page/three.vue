@@ -1,5 +1,9 @@
 <template lang="html">
   <div class="content" :class="{noScroll: isShowPopup}">
+    <div class="item">
+      <a href="http://www.cnblogs.com/buerjj/p/7876057.html">此页的代码讲解</a>
+    </div>
+
     <div :class="{noScroll: isShowPopup}">
       <div class="item" v-for="num in 50" @click="itemClick(num)">
         <div style="width:100%">点击item{{num}}</div>
@@ -18,7 +22,6 @@
 </template>
 
 <script>
-import { Popup } from 'mint-ui'
 export default {
   name: 'Three',
   data() {
@@ -27,7 +30,7 @@ export default {
     }
   },
   components: {
-    Popup
+
   },
   methods: {
     itemClick(num) { // 点击底部item
