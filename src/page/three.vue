@@ -98,7 +98,6 @@ export default {
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
   color: white;
   width: 60%;
