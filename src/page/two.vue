@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <span>TwoPage</span>
-
+    <a href="http://www.cnblogs.com/buerjj/p/7868739.html">此页面代码讲解</a>
     <input class="input-t" type="text" placeholder='任意输入...'>
 
     <div class="div-click" @click="divClick()">
