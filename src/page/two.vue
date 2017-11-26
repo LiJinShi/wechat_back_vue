@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     let that = this;
-    // 添加返回事件监听
+    // 添加返回事件监听，注意对window添加监听事件即使当前这个页面销毁，这个事件会一直存在。也就是这个mounted执行过后，以后其他页面的返回也进入此方法，但因为此方法回调内对象已销毁，所以这里不会有问题。具体介绍请查看我博客。
     window.addEventListener("popstate", function(e) {
       that.isShowTestDiv = false;
     }, false);
