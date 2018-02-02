@@ -4,14 +4,14 @@
       <a href="http://www.cnblogs.com/buerjj/p/7876057.html">此页的代码讲解</a>
     </div>
 
-    <div :class="{noScroll: isShowPopup}">
+    <div :class="{noScroll: isShowPopup}" ref="itemContent">
       <div class="item" v-for="num in 50" @click="itemClick(num)">
         <div style="width:100%">点击item{{num}}</div>
       </div>
     </div>
 
 
-    <div v-if="isShowPopup" class="popup" @click="popUpEmptyClick()">
+    <div v-if="isShowPopup" class="popup" @click="popUpEmptyClick()" @scroll.prevent>
       <div class="message">
         <p class="message-title" v-for="num in 30" @click.stop="messageTitleClick(num)">
           消息提示 {{num}}
@@ -26,15 +26,26 @@ export default {
   name: 'Three',
   data() {
     return {
-      isShowPopup: false
+      isShowPopup: false,
+      pageScrollYoffset: 0 // 保存滚动条位置
     }
   },
   components: {
 
   },
   methods: {
+    getScrollTop(){ // 获取滚动条位置
+        var scrollTop=0;
+        if(document.documentElement&&document.documentElement.scrollTop){
+            scrollTop=document.documentElement.scrollTop;
+        }else if(document.body){
+            scrollTop=document.body.scrollTop;
+        }
+        return scrollTop;
+    },
     itemClick(num) { // 点击底部item
       console.log("itemClick" + num);
+      this.pageScrollYoffset = this.getScrollTop();
       this.isShowPopup = true;
     },
     popUpEmptyClick() { // 点击弹窗空白处
@@ -47,10 +58,18 @@ export default {
   watch: {
     isShowPopup(newVal, oldVal) {
       if (newVal == true) {
-        document.body.style.cssText = "overflow-y: hidden";
+        let cssStr = "overflow-y: hidden; height: 100%;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
       } else {
-        document.body.style.cssText = "overflow-y: auto";
+        let cssStr = "overflow-y: auto; height: auto;";
+        document.getElementsByTagName('html')[0].style.cssText = cssStr;
+        document.body.style.cssText = cssStr;
       }
+
+      // 下面需要这两行代码，兼容不同浏览器
+      document.body.scrollTop = this.pageScrollYoffset;
+      window.scroll(0, this.pageScrollYoffset);
     }
   }
 }
@@ -103,6 +122,8 @@ export default {
   width: 60%;
   height: 40%;
   overflow-y: scroll;
+  /* ios需要下面这个属性 */
+  -webkit-overflow-scrolling: touch;
 }
 
 .content .message-title {
